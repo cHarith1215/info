@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Brand Info Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video autoplay muted loop id="background-video">
+        <!-- Video source will be set by JavaScript -->
+        Your browser does not support the video tag.
+    </video>
+    
+    <div class="overlay"></div>
+    
+    <main class="content">
+        <div class="brand-container">
+            <h1 id="brand-name" class="glassy-text">Your Brand Name</h1>
+            <h2 id="brand-title" class="glassy-text">Your Title/Slogan</h2>
+            
+            <div class="description-box">
+                <p id="brand-description">Your brand description goes here. This is where you can tell your story and share what makes your brand unique and special.</p>
+            </div>
+            
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <span id="contact-email">your.email@example.com</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <span id="contact-phone">Your Phone Number</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="contact-location">Your Location</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="social-media-container">
+            <h3 class="section-title">Connect With Me</h3>
+            <div class="social-icons">
+                <a href="#" id="linkedin-link" class="social-icon" target="_blank">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" id="github-link" class="social-icon" target="_blank">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" id="twitter-link" class="social-icon" target="_blank">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" id="portfolio-link" class="social-icon" target="_blank">
+                    <i class="fas fa-globe"></i>
+                </a>
+                <a href="#" id="whatsapp-link" class="social-icon" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <a href="#" id="telegram-link" class="social-icon" target="_blank">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <a href="#" id="discord-link" class="social-icon" target="_blank">
+                    <i class="fab fa-discord"></i>
+                </a>
+                <a href="#" id="youtube-link" class="social-icon" target="_blank">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+        
+    </main>
+
+    <script>
+        // Background video handling
+        const videoElement = document.getElementById('background-video');
+        const videoSources = [
+            "https://videos.pexels.com/video-files/3129957/3129957-sd_640_360_25fps.mp4",
+            "https://videos.pexels.com/video-files/2324166/2324166-uhd_2560_1440_25fps.mp4",
+            "https://videos.pexels.com/video-files/3130284/3130284-uhd_2560_1440_30fps.mp4",
+            "https://videos.pexels.com/video-files/3129595/3129595-sd_640_360_30fps.mp4"
+        ];
+        let currentVideoIndex = 0;
+
+        function changeVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+            videoElement.src = videoSources[currentVideoIndex];
+            videoElement.load();
+            videoElement.play();
+        }
+
+        // Set initial video
+        videoElement.src = videoSources[currentVideoIndex];
+        videoElement.load();
+        videoElement.play();
+
+        // Change video every 1 minute
+        setInterval(changeVideo, 60000);
+        videoElement.addEventListener('ended', changeVideo);
+
+        // Load configuration from config.json
+        fetch('config.json')
+            .then(response => response.json())
+            .then(config => {
+                // Update page title
+                document.title = config.brandName + " - Info Page";
+                
+                // Update brand information
+                document.getElementById('brand-name').textContent = config.brandName;
+                document.getElementById('brand-title').textContent = config.title;
+                document.getElementById('brand-description').textContent = config.description;
+                
+                // Update contact information
+                document.getElementById('contact-email').textContent = config.contact.email;
+                document.getElementById('contact-phone').textContent = config.contact.phone;
+                document.getElementById('contact-location').textContent = config.contact.location;
+                
+                // Update social media links
+                if (config.socialMedia.linkedin) {
+                    document.getElementById('linkedin-link').href = config.socialMedia.linkedin;
+                }
+                if (config.socialMedia.github) {
+                    document.getElementById('github-link').href = config.socialMedia.github;
+                }
+                if (config.socialMedia.twitter) {
+                    document.getElementById('twitter-link').href = config.socialMedia.twitter;
+                }
+                if (config.socialMedia.portfolio) {
+                    document.getElementById('portfolio-link').href = config.socialMedia.portfolio;
+                }
+                if (config.socialMedia.whatsapp) {
+                    document.getElementById('whatsapp-link').href = "https://wa.me/" + config.socialMedia.whatsapp.replace(/[+\s]/g, '');
+                }
+                if (config.socialMedia.telegram) {
+                    document.getElementById('telegram-link').href = "https://t.me/" + config.socialMedia.telegram.replace('@', '');
+                }
+                if (config.socialMedia.discord) {
+                    document.getElementById('discord-link').href = config.socialMedia.discord;
+                }
+                if (config.socialMedia.youtube) {
+                    document.getElementById('youtube-link').href = config.socialMedia.youtube;
+                }
+            })
+            .catch(error => console.error('Error loading config:', error));
+
+    </script>
+</body>
+</html>
