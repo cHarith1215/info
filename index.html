@@ -78,7 +78,7 @@
         // Background video handling
         const videoElement = document.getElementById('background-video');
         const videoSources = [
-            "https://videos.pexels.com/video-files/3129957/3129957-sd_640_360_25fps.mp4",
+            "https://www.desktophut.com/files/1685709155-1685709155-dragon-samurai-kneeling-torii-gate-live-wallpaper.mp4",
             "https://videos.pexels.com/video-files/2324166/2324166-uhd_2560_1440_25fps.mp4",
             "https://videos.pexels.com/video-files/3130284/3130284-uhd_2560_1440_30fps.mp4",
             "https://videos.pexels.com/video-files/3129595/3129595-sd_640_360_30fps.mp4"
@@ -97,8 +97,8 @@
         videoElement.load();
         videoElement.play();
 
-        // Change video every 1 minute
-        setInterval(changeVideo, 60000);
+        // Change video every 30 sec
+        setInterval(changeVideo, 30000);
         videoElement.addEventListener('ended', changeVideo);
 
         // Load configuration from config.json
